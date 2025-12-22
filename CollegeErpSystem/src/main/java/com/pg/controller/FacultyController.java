@@ -26,9 +26,6 @@ public class FacultyController
 	@Autowired
 	private IFacultyServiceImpl factService;
 
-	
-   
-	
 	@GetMapping("/f_dashboard")
 	public String showFacultyDashBoard(Map<String , Object> map, HttpSession hs)
 	{

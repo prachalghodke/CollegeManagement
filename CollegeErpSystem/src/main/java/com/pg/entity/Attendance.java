@@ -12,16 +12,20 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name="Attendance_Erp")
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@RequiredArgsConstructor
+//@AllArgsConstructor
+//@RequiredArgsConstructor
 public class Attendance 
 {
 	 @Id
@@ -38,6 +42,9 @@ public class Attendance
 	 @ManyToOne
 	 @JoinColumn(name="sid")
 	 private Student student;
+
+	 
+	 
 }
 
 

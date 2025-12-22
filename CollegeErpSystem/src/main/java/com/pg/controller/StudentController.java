@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.pg.entity.Attendance;
+import com.pg.entity.Marks;
 import com.pg.entity.Student;
 import com.pg.service.IStudentServiceImpl;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class StudentController 
@@ -83,13 +87,13 @@ public class StudentController
 		 }
 		 
 		 @PostMapping("/student_login")
-		 public String doLogin(@RequestParam String email , @RequestParam String password , Map<String , Object> map)
+		 public String doLogin(@RequestParam String email , @RequestParam String password , HttpSession session , Map<String,Object> map)
 		 {
 			 Student stud = studService.studentLogin(email, password);
 			 
 			 if(stud != null)
 			 {
-				 map.put("studentData", stud);
+				session.setAttribute("studentData", stud);
 				 return "student_dashboard";
 			 }
 			 else
@@ -98,7 +102,66 @@ public class StudentController
 				 return "redirect :student_login";
 			 }
 		 }
+		 
+		 @GetMapping("/view_dashboard")
+		 public String viewDashBoard()
+		 {
+			 return "student_dashboard";
+		 }
+		 
+		 @GetMapping("/viewMarks")
+		 public String viewMarks(HttpSession session , Map<String ,Object> map)
+		 {
+			Student student  = (Student) session.getAttribute("studentData");
+			
+			List<Marks> marksList = studService.findStudentMarks(student);	
+			
+			map.put("marksList", marksList);
+			
+			return "view_marks";
+		 }
+		 
+		 
+		 @GetMapping("/viewAttendance")
+		 public String viewAttendance(HttpSession session , Map<String , Object> map)
+		 {
+			 Student student = (Student) session.getAttribute("studentData");
+			 
+			 if(student == null)
+			 {
+				 return "redirect:student_login";
+			 }
+			 
+			 List<Attendance> attendanceList = studService.findStudentsAttendance(student);
+			
+			 map.put("attendance", attendanceList);
+			 
+			 return "view_attendance";
+		 }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

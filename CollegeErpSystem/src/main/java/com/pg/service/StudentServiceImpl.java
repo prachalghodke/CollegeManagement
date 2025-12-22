@@ -1,13 +1,14 @@
 package com.pg.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pg.entity.Faculty;
+import com.pg.entity.Attendance;
+import com.pg.entity.Marks;
 import com.pg.entity.Student;
+import com.pg.repository.AttendanceRepository;
 import com.pg.repository.StudentRepository;
 
 @Service	
@@ -15,6 +16,9 @@ public class StudentServiceImpl implements IStudentServiceImpl
 {
 	@Autowired
 	private StudentRepository studRepo;
+	
+	@Autowired
+	private AttendanceRepository attendRepo;
 
 	@Override
 	public String addStudent(Student student) 
@@ -78,6 +82,22 @@ public class StudentServiceImpl implements IStudentServiceImpl
 		Student stud = studRepo.findByEmailAndPassword(email, password);
 		
 		return stud;
+	}
+
+	@Override
+	public List<Marks> findStudentMarks(Student student) 
+	{
+		List<Marks> studentMarks = student.getMarks();
+		
+		return studentMarks;
+	}
+
+	@Override
+	public List<Attendance> findStudentsAttendance(Student student) 
+	{
+		List<Attendance> studentsAttendance = attendRepo.findByStudent_Sid(student.getSid());
+		
+		return studentsAttendance;
 	}
 	
 	

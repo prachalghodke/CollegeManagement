@@ -1,39 +1,145 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Take Attendance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
 
-<h2 style="text-align:center;">Take Attendance</h2>
+        header {
+            text-align: center;
+            background-color: #1E3A8A;
+            color: white;
+            padding: 15px 0;
+            font-size: 24px;
+        }
 
-<form action="saveattendance" method="post">
+        .container {
+            width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
 
-<table border="1" align="center" cellpadding="10">
-<tr>
-    <th>SID</th>
-    <th>Name</th>
-    <th>Status</th>
-</tr>
+        h2 {
+            color: #1E3A8A;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-<c:forEach var="stud" items="${students}">
-<tr>
-    <td>${stud.sid}</td>
-    <td>${stud.sname}</td>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-    <td>
-        Present:
-        <input type="radio" name="status_${stud.sid}" value="Present" required />
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
 
-        Absent:
-        <input type="radio" name="status_${stud.sid}" value="Absent" required />
-    </td>
-</tr>
-</c:forEach>
+        th {
+            background-color: #1E3A8A;
+            color: white;
+        }
 
-</table>
+        input[type="radio"] {
+            margin: 0 5px;
+        }
 
-<br><center>
-    <input type="submit" value="Save Attendance">
-</center>
+        input[type="submit"] {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
 
-</form>
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
 
-<h3 style="color:green; text-align:center;">${msg}</h3>
-<h1 style="color: red; text-align: center;"><a href="attendancereport">show attendance</a></h1>
+        .msg {
+            text-align: center;
+            color: green;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .links a {
+            margin: 0 10px;
+            padding: 8px 15px;
+            background-color: #1E3A8A;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .links a:hover {
+            background-color: #274472;
+        }
+    </style>
+</head>
+<body>
+
+<header>My College ERP System</header>
+
+<div class="container">
+
+    <h2>Take Attendance</h2>
+
+    <form action="saveattendance" method="post">
+        <table>
+            <tr>
+                <th>SID</th>
+                <th>Name</th>
+                <th>Status</th>
+            </tr>
+
+            <c:forEach var="stud" items="${students}">
+                <tr>
+                    <td>${stud.sid}</td>
+                    <td>${stud.sname}</td>
+                    <td>
+                        Present
+                        <input type="radio" name="status_${stud.sid}" value="Present" required />
+                        Absent
+                        <input type="radio" name="status_${stud.sid}" value="Absent" required />
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+
+        <input type="submit" value="Save Attendance">
+    </form>
+
+    <div class="msg">${msg}</div>
+
+    <div class="links">
+        <a href="attendancereport">Show Attendance</a>
+        <a href="f_dashboard">Back to Dashboard</a>
+        <a href="./">Home</a>
+    </div>
+
+</div>
+
+</body>
+</html>

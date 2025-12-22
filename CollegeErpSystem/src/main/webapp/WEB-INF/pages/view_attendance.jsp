@@ -1,9 +1,8 @@
-<%@ page isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Marks Report</title>
+    <title>Attendance Report</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,7 +10,7 @@
         }
 
         .container {
-            width: 500px;
+            width: 600px;
             margin: 50px auto;
             background: white;
             padding: 25px;
@@ -45,10 +44,10 @@
             background-color: #f2f2f2;
         }
 
-        .no-marks {
-            text-align: center;
+        .message {
             color: red;
-            margin-bottom: 15px;
+            text-align: center;
+            margin-bottom: 10px;
         }
 
         a.back-link {
@@ -68,29 +67,28 @@
 
 <div class="container">
 
-    <h2>Marks Report</h2>
+    <h2>Attendance Report</h2>
 
-    <c:choose>
-        <c:when test="${!empty marksList}">
-            <table>
+    <c:if test="${not empty message}">
+        <div class="message">${message}</div>
+    </c:if>
+
+    <c:if test="${not empty attendance}">
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+            <c:forEach var="att" items="${attendance}">
                 <tr>
-                    <th>Exam Type</th>
-                    <th>Marks</th>
+                    <td>${att.attendance_date}</td>
+                    <td>${att.status}</td>
                 </tr>
-                <c:forEach var="m" items="${marksList}">
-                    <tr>
-                        <td>${m.examtype}</td>
-                        <td>${m.marks}</td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </c:when>
-        <c:otherwise>
-            <div class="no-marks">No Marks Found</div>
-        </c:otherwise>
-    </c:choose>
+            </c:forEach>
+        </table>
+    </c:if>
 
-    <a href="view_dashboard" class="back-link">Back to Student Dashboard</a>
+    <a href="view_dashboard" class="back-link">Back to Dashboard</a>
 
 </div>
 
